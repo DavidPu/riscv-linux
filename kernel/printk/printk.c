@@ -50,6 +50,7 @@
 
 #include <linux/uaccess.h>
 #include <asm/sections.h>
+#include <asm/sbi.h>
 
 #include <trace/events/initcall.h>
 #define CREATE_TRACE_POINTS
@@ -1887,6 +1888,8 @@ asmlinkage int vprintk_emit(int facility, int level,
 		lflags |= LOG_PREFIX|LOG_NEWLINE;
 
 	printed_len = log_output(facility, level, lflags, dict, dictlen, text, text_len);
+        if (!console_drivers)
+          sbi_console_puts(text, text_len);
 
 	logbuf_unlock_irqrestore(flags);
 

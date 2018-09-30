@@ -47,6 +47,16 @@ static inline void sbi_console_putchar(int ch)
 {
 	SBI_CALL_1(SBI_CONSOLE_PUTCHAR, ch);
 }
+static inline int sbi_console_puts(const char *buf, int count)
+{
+	int i;
+
+	for (i = 0; i < count; i++)
+		sbi_console_putchar(buf[i]);
+    sbi_console_putchar('\r');
+    sbi_console_putchar('\n');
+	return i;
+}
 
 static inline int sbi_console_getchar(void)
 {

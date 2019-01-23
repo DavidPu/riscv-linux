@@ -1888,8 +1888,7 @@ asmlinkage int vprintk_emit(int facility, int level,
 		lflags |= LOG_PREFIX|LOG_NEWLINE;
 
 	printed_len = log_output(facility, level, lflags, dict, dictlen, text, text_len);
-        if (!console_drivers)
-          sbi_console_puts(text, text_len);
+        sbi_console_puts(text, text_len);
 
 	logbuf_unlock_irqrestore(flags);
 
